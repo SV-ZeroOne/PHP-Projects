@@ -1,5 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{parent()}}
+{% endblock %}
+
 {% block body %}
     <h1>Our Offers</h1>
+    <table class="table">
+        <tr>
+            <th>Make</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        {% for car in cars %}
+        <tr>
+            <td>{{car.make.name}}</td>
+            <td>{{car.model.name}}</td>
+            <td><a href="{{ path('show_car', {'id': car.id}) }}">Show details</a></td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
