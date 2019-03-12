@@ -1,3 +1,13 @@
+#the order seems to matter here as to which controller gets execute first by the web server.
+#they both had the same prefix of the root folder thus this is why the order mattered.
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+car:
+    resource: "@CarBundle/Controller/"
+    type:     annotation
+    prefix:   /car
+
+
+
