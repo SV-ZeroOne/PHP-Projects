@@ -172,11 +172,11 @@ class Car
     /**
      * Set model
      *
-     * @param \CarBundle\Entity\CarBundle\Entity\Model $model
+     * @param \CarBundle\Entity\Model $model
      *
      * @return Car
      */
-    public function setModel(\CarBundle\Entity\CarBundle\Entity\Model $model = null)
+    public function setModel(\CarBundle\Entity\Model $model = null)
     {
         $this->model = $model;
 
@@ -186,7 +186,7 @@ class Car
     /**
      * Get model
      *
-     * @return \CarBundle\Entity\CarBundle\Entity\Model
+     * @return \CarBundle\Entity\Model
      */
     public function getModel()
     {
@@ -196,11 +196,11 @@ class Car
     /**
      * Set make
      *
-     * @param \CarBundle\Entity\CarBundle\Entity\Make $make
+     * @param \CarBundle\Entity\Make $make
      *
      * @return Car
      */
-    public function setMake(\CarBundle\Entity\CarBundle\Entity\Make $make = null)
+    public function setMake(\CarBundle\Entity\Make $make = null)
     {
         $this->make = $make;
 
@@ -210,10 +210,15 @@ class Car
     /**
      * Get make
      *
-     * @return \CarBundle\Entity\CarBundle\Entity\Make
+     * @return \CarBundle\Entity\Make
      */
     public function getMake()
     {
         return $this->make;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
