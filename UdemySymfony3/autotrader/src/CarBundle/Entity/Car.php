@@ -64,6 +64,13 @@ class Car
     private $navigation;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="promote", type="boolean")
+     */
+    private $promote;
+
+    /**
      * Get id
      *
      * @return int
@@ -215,5 +222,29 @@ class Car
     public function getMake()
     {
         return $this->make;
+    }
+
+    /**
+     * Set promote
+     *
+     * @param boolean $promote
+     *
+     * @return Car
+     */
+    public function setPromote($promote)
+    {
+        $this->promote = $promote;
+
+        return $this;
+    }
+
+    /**
+     * Get promote
+     *
+     * @return boolean
+     */
+    public function getPromote()
+    {
+        return $this->promote;
     }
 }
