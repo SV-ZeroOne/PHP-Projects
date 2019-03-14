@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CarBundle\Entity\Car;
 use CarBundle\Form\CarType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Car controller.
@@ -34,6 +35,22 @@ class CarController extends Controller
         return array(
             'cars' => $cars,
         );
+    }
+
+    /**
+     * @param $id
+     * Promote a car
+     * @Route("/promote/{id}", name="car_promote")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function promoteAction($id)
+    {
+        $dataChecker = $this->get('car.data_checker');
+        $em = $this->getDoctrine()->getEntityManager();
+        $car = $em->getRepository('CarBundle:Car')->find($id);
+        $result =  $dataChecker->checkCar($car);
+        $this->addFlash('success', $result);
+        return $this->redirectToRoute("car_index");
     }
 
     /**

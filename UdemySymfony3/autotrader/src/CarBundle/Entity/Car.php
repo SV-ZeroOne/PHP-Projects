@@ -216,9 +216,4 @@ class Car
     {
         return $this->make;
     }
-
-    public function __toString()
-    {
-        return $this->getName();
-    }
 }
