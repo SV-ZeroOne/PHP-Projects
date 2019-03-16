@@ -8,22 +8,22 @@ use Doctrine\ORM\EntityManager;
 class DataChecker
 {
     /** @var boolean */
-    protected $requiredImagesToPromoteCar;
+    protected $requireImagesToPromoteCar;
 
     /** @var EntityManager */
     protected $entityManager;
 
-    public function __construct($entityManager, $requiredImagesToPromoteCar)
+    public function __construct($entityManager, $requireImagesToPromoteCar)
     {   
         $this->entityManager = $entityManager;
-        $this->requiredImagesToPromoteCar = $requiredImagesToPromoteCar;
+        $this->requireImagesToPromoteCar = $requireImagesToPromoteCar;
     }
 
     public function checkCar(Car $car)
     {
         //return "Car" . $car->getModel() . " checked";
         $promote = true;
-        if($this->requiredImagesToPromoteCar)
+        if($this->requireImagesToPromoteCar)
         {
             $promote = false;
         }
