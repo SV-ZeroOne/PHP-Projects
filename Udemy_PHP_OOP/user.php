@@ -9,6 +9,8 @@ class User
     public $email;
     public $password;
 
+    public static $minPassLength = 5;
+
     public function __construct()
     {
         //Used to configure classes on instantiation.
@@ -38,9 +40,34 @@ class User
     {
         echo $this->$username . ' is authenticated';
     }
+
+    public static function validatePassword($password)
+    {
+        //then self is a scope resolution operator
+        if(strlen($password) >= self::$minPassLength)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 $user = new User;
 //$user->register();
-$user->login("Steve", "Pass1234")
+$user->login("Steve", "Pass1234");
+$password = 'pass';
+
+//no need to instantiate static methods
+if(User::validatePassword($password))
+{
+    echo 'Password is valid';
+}
+else
+{
+    echo 'Password is not valid';
+}
+
 ?>
