@@ -7,7 +7,21 @@ abstract class Model
 
     public function __construct()
     {
-        $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
+        //$this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
+        $dsn = 'mysql:host='. DB_HOST . ';dbname='. DB_NAME;
+        $options = array(
+            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        );
+        // Create new PDO
+        try
+        {
+            $this->dbh = new PDO($dsn, DB_USER, DB_PASS, $options);
+        } 
+        catch(PDOException $e)
+        {
+            $this->error = $e->getMessage();
+        }
     }
 
     public function query($query)
@@ -36,16 +50,27 @@ abstract class Model
         }
         $this->stmt->bindValue($param, $value, $type);
     }
-    
+
     public function execute()
     {
-        $this->stmt->execute();
+        return $this->stmt->execute();
     }
 
     public function resultSet()
     {
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
+    }
+
+    public function single()
+    {
+        $this->execute();
+        return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 }
