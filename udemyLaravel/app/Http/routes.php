@@ -58,7 +58,6 @@ Route::get('admin/post/example', array ('as'=>'admin.home', function() {
 Route::get('/insert', function(){
     DB::insert('INSERT INTO posts(title, content) values(?, ?)', ['PHPO with Laravel', 'Laravel is not a bad PHP framework and has lots of features.']);
 });
-*/
 
 Route::get('/read', function() {
     $results = DB::select('select * from posts where id = ?', [1]);
@@ -78,4 +77,6 @@ Route::get('/delete', function(){
     $deleted = DB::delete('DELETE FROM posts WHERE id = ?', [1]);
     return $deleted;
 });
+*/
+
 
