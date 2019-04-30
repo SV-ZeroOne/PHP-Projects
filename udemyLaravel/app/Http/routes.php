@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use App\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -52,6 +54,7 @@ Route::get('admin/post/example', array ('as'=>'admin.home', function() {
 |--------------------------------------------------------------------------
 | Raw SQL Queries
 |--------------------------------------------------------------------------
+| Need this: use Illuminate\Support\Facades\DB;
 */
 
 /*
@@ -78,5 +81,53 @@ Route::get('/delete', function(){
     return $deleted;
 });
 */
+
+/*
+|--------------------------------------------------------------------------
+| Eloquent ORM
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/read', function(){
+    //Pulls all the record from the DB
+    $posts = Post::all();
+    foreach ($posts as $post) {
+        return $post->title;
+    }
+});
+
+Route::get('/find', function(){
+    $post = Post::find(2);
+    return $post->title;
+});
+
+Route::get('findwhere', function(){
+    $posts = Post::where('id', 2)->orderBy('id', 'desc')->take(1)->get();
+    return $posts;
+});
+
+Route::get('findmore', function(){
+    $posts = Post::findOrFail();
+    return $posts;
+});
+
+//Inserting data with Eloquent
+Route::get('/basicinsert', function(){
+    $post = new Post;
+    $post->title = "New Eloquent title insert";
+    $post->content = "Wow check out what eloquent can do at https://laravel.com/docs/5.8/queries";
+    //Save can be used to update, but first you will need to find the object to update like $post = new Post::find(1);
+    $post->save();
+});
+
+//Had to specify in the Post object in the $fillable variable which value are safe to create.
+Route::get('/create', function(){
+    Post::create(['title'=>'The create method', 'content'=>'Wow I\'m learning a lot about laravel']);
+});
+
+//Updating data
+Route::get('/update', function(){
+    Post::where('id', 2)->where('is_admin', 0)->update(['title'=>'NEW PHP TITLE', 'content'=>'PHP is an ok and powerful programing language.']);
+});
 
 
