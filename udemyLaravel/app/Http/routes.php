@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -46,3 +47,35 @@ Route::get('admin/post/example', array ('as'=>'admin.home', function() {
     return "this url is " . $url;
 }));
 */
+
+/*
+|--------------------------------------------------------------------------
+| Raw SQL Queries
+|--------------------------------------------------------------------------
+*/
+
+/*
+Route::get('/insert', function(){
+    DB::insert('INSERT INTO posts(title, content) values(?, ?)', ['PHPO with Laravel', 'Laravel is not a bad PHP framework and has lots of features.']);
+});
+*/
+
+Route::get('/read', function() {
+    $results = DB::select('select * from posts where id = ?', [1]);
+    //results come in a array of STD class object.
+    //var_dump($results);
+    foreach ($results as $result) {
+        return $result->title;
+    }
+});
+
+Route::get('/update', function(){
+    $updated = DB::update('UPDATE posts set title = "PHP with Laravel" where id = ?', [1]);
+    return $updated;
+});
+
+Route::get('/delete', function(){
+    $deleted = DB::delete('DELETE FROM posts WHERE id = ?', [1]);
+    return $deleted;
+});
+
