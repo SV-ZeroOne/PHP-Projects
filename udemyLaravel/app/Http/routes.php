@@ -130,4 +130,39 @@ Route::get('/update', function(){
     Post::where('id', 2)->where('is_admin', 0)->update(['title'=>'NEW PHP TITLE', 'content'=>'PHP is an ok and powerful programing language.']);
 });
 
+//Deleting data
+Route::get('/delete', function(){
+    $post = Post::find(2);
+    $post->delete();
+    //below code also works
+    //Post::destroy(2);
+    //Post::destroy([1,2]);
+    //Post::where('is_admin', 0)->delete();
+});
 
+//Soft delete / trashing
+Route::get('/softdelete', function(){
+    Post::find(3)->delete();
+});
+
+//Retrieving deleted / trashed records
+Route::get('/readsoftdelete', function(){
+    //Does not work, need to use withTrashed method
+    //$post = Post::find(3);
+    //return $post;
+
+    // $post = Post::withTrashed()->where('id', 3)->get();
+    // return $post;
+    $post = Post::onlyTrashed()->get();
+    return $post;
+});
+
+//Restoring deleted / trashed items
+Route::get('/restoresoftdeletes', function(){
+    $posts = Post::onlyTrashed()->restore();
+});
+
+//Delete items permanently 
+Route::get('/forcedelete', function(){
+    Post::onlyTrashed()->forceDelete();
+});
