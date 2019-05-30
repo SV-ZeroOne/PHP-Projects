@@ -180,8 +180,17 @@ Route::get('/user/{id}/post', function($id){
     User::find(1)->post->content; 
 });
 
-
 Route::get('/post/{id}/user', function($id){
     return Post::find($id)->user->name;
 });
+
+//One to many
+Route::get('/posts', function(){
+    $user = User::find(1);
+    foreach($user->posts as $post)
+    {
+        echo $post->title . "<br>";
+    }
+});
+
 
