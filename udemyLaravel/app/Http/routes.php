@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use App\Post;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -165,4 +166,16 @@ Route::get('/restoresoftdeletes', function(){
 //Delete items permanently 
 Route::get('/forcedelete', function(){
     Post::onlyTrashed()->forceDelete();
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Eloquent Relationships
+|--------------------------------------------------------------------------
+*/
+
+//One to one relationship
+Route::get('/user/{id}/post', function($id){
+    User::find(1)->post->content; 
 });
