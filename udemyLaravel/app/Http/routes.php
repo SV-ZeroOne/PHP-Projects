@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use App\Post;
 use App\User;
+use App\Country;
 
 /*
 |--------------------------------------------------------------------------
@@ -201,4 +202,20 @@ Route::get('/user/{id}/role', function($id){
     //     return $role->name;
     // }
     return $user;
+});
+
+//Access the pivot/joining table
+Route::get('/user/pivot', function(){
+    $user = User::find(1);
+    foreach ($user->roles as $role) {
+        echo $role->pivot->created_at;
+    }
+});
+
+Route::get('/user/country', function(){
+    $country = Country::find(1);
+    foreach ($country->posts as $post) 
+    {
+        return $post->title;
+    }
 });
